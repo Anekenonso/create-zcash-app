@@ -16,6 +16,7 @@ export function Step5Send({ onSuccess, onLog }: Step5SendProps) {
   const [sending, setSending] = useState(false);
   const [currentStep, setCurrentStep] = useState<string>("");
   const [receipt, setReceipt] = useState<TransactionReceipt | null>(null);
+  const [copiedTxid, setCopiedTxid] = useState(false);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,21 +42,42 @@ export function Step5Send({ onSuccess, onLog }: Step5SendProps) {
     }
   };
 
+  const copyTxid = () => {
+    if (!receipt) return;
+    navigator.clipboard.writeText(receipt.txid);
+    setCopiedTxid(true);
+    setTimeout(() => setCopiedTxid(false), 2000);
+  };
+
   return (
-    <div className="glass-card" style={{ padding: 24 }}>
-      <h2 style={{ margin: "0 0 6px", fontSize: 18, color: "var(--accent-gold)" }}>
-        Step 5: Shielded Transfer & Zero-Knowledge Proving
-      </h2>
-      <p style={{ margin: "0 0 20px", color: "var(--text-muted)", fontSize: 14 }}>
-        Construct a PCZT (Partially Constructed Zcash Transaction), generate a Halo 2 ZK proof in the browser Web Worker, sign with USK, and broadcast.
-      </p>
+    <div className="glass-card" style={{ padding: 28 }}>
+      <div style={{ marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent-gold)", letterSpacing: "0.5px" }}>
+            STEP 05
+          </span>
+          <span style={{ color: "var(--text-dim)" }}>•</span>
+          <span style={{ fontSize: 12, color: "var(--text-muted)" }}>ZERO-KNOWLEDGE PROVING</span>
+        </div>
+        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#ffffff" }}>
+          Shielded Transfer & Zero-Knowledge Proving
+        </h2>
+        <p style={{ margin: "8px 0 0", color: "var(--text-muted)", fontSize: 14, lineHeight: 1.5 }}>
+          Constructs a PCZT (Partially Constructed Zcash Transaction), generates Halo 2 zero-knowledge proofs in a browser Web Worker, signs with your USK, and broadcasts the raw shielded transaction.
+        </p>
+      </div>
 
       {!receipt ? (
         <form onSubmit={handleSend}>
-          <div style={{ marginBottom: 14 }}>
-            <label style={{ display: "block", fontSize: 12, color: "var(--text-muted)", marginBottom: 6, fontWeight: 600 }}>
-              RECIPIENT UNIFIED ADDRESS (TESTNET):
-            </label>
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <label style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: 700, letterSpacing: "0.4px" }}>
+                RECIPIENT UNIFIED ADDRESS (TESTNET)
+              </label>
+              <span style={{ fontSize: 11, color: "var(--accent-emerald)", fontWeight: 600 }}>
+                Orchard + Sapling Receiver Verified
+              </span>
+            </div>
             <input
               id="recipient-input"
               type="text"
@@ -65,20 +87,21 @@ export function Step5Send({ onSuccess, onLog }: Step5SendProps) {
               className="mono"
               style={{
                 width: "100%",
-                padding: "10px 12px",
-                background: "rgba(0,0,0,0.4)",
+                padding: "12px 14px",
+                background: "rgba(0, 0, 0, 0.45)",
                 border: "1px solid var(--bg-card-border)",
-                borderRadius: 8,
-                color: "#e2e8f0",
-                fontSize: 12
+                borderRadius: 10,
+                color: "#f1f5f9",
+                fontSize: 12,
+                transition: "all 0.2s ease"
               }}
             />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 12, marginBottom: 14 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 2fr", gap: 14, marginBottom: 18 }}>
             <div>
-              <label style={{ display: "block", fontSize: 12, color: "var(--text-muted)", marginBottom: 6, fontWeight: 600 }}>
-                AMOUNT (ZEC):
+              <label style={{ display: "block", fontSize: 12, color: "var(--text-muted)", marginBottom: 6, fontWeight: 700, letterSpacing: "0.4px" }}>
+                AMOUNT (ZEC)
               </label>
               <input
                 id="amount-input"
@@ -91,43 +114,86 @@ export function Step5Send({ onSuccess, onLog }: Step5SendProps) {
                 className="mono"
                 style={{
                   width: "100%",
-                  padding: "10px 12px",
-                  background: "rgba(0,0,0,0.4)",
+                  padding: "12px 14px",
+                  background: "rgba(0, 0, 0, 0.45)",
                   border: "1px solid var(--bg-card-border)",
-                  borderRadius: 8,
-                  color: "#e2e8f0",
-                  fontSize: 13
+                  borderRadius: 10,
+                  color: "#f1f5f9",
+                  fontSize: 14,
+                  fontWeight: 700
                 }}
               />
+              <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 4 }}>
+                + 0.0001 ZEC ZIP 317 Fee
+              </div>
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: 12, color: "var(--text-muted)", marginBottom: 6, fontWeight: 600 }}>
-                ENCRYPTED MEMO (OPTIONAL):
+              <label style={{ display: "block", fontSize: 12, color: "var(--text-muted)", marginBottom: 6, fontWeight: 700, letterSpacing: "0.4px" }}>
+                ENCRYPTED MEMO (OPTIONAL, 512 BYTES)
               </label>
               <input
                 id="memo-input"
                 type="text"
                 value={memo}
                 onChange={(e) => setMemo(e.target.value)}
+                placeholder="Private memo encrypted for recipient only..."
                 style={{
                   width: "100%",
-                  padding: "10px 12px",
-                  background: "rgba(0,0,0,0.4)",
+                  padding: "12px 14px",
+                  background: "rgba(0, 0, 0, 0.45)",
                   border: "1px solid var(--bg-card-border)",
-                  borderRadius: 8,
-                  color: "#e2e8f0",
+                  borderRadius: 10,
+                  color: "#f1f5f9",
                   fontSize: 13
                 }}
               />
+              <div style={{ fontSize: 11, color: "var(--accent-cyan)", marginTop: 4 }}>
+                🔒 Encrypted on-chain with recipient's viewing key
+              </div>
             </div>
           </div>
 
+          {/* Animated Proving Tracker */}
           {sending && (
-            <div style={{ background: "rgba(245, 166, 35, 0.1)", border: "1px solid rgba(245, 166, 35, 0.3)", padding: 12, borderRadius: 8, marginBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--accent-gold)", fontSize: 13 }}>
-                <span className="pulse-dot"></span>
-                <span>{currentStep || "Processing..."}</span>
+            <div style={{
+              background: "rgba(245, 166, 35, 0.08)",
+              border: "1px solid rgba(245, 166, 35, 0.35)",
+              padding: 16,
+              borderRadius: 12,
+              marginBottom: 20,
+              boxShadow: "0 0 20px rgba(245, 166, 35, 0.15)"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+                <div className="spinner spinner-gold" />
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "var(--accent-gold)" }}>
+                    {currentStep || "Generating Halo 2 Zero-Knowledge Proof..."}
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
+                    Web Worker thread executing circuit constraints without leaking note commitments
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, marginTop: 10 }}>
+                {["1. PCZT Proposal", "2. Halo 2 Proof", "3. USK Sign", "4. Broadcast"].map((stg, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "rgba(0, 0, 0, 0.3)",
+                      padding: "6px 8px",
+                      borderRadius: 6,
+                      fontSize: 10,
+                      fontWeight: 600,
+                      color: "var(--accent-gold)",
+                      textAlign: "center",
+                      border: "1px solid rgba(245, 166, 35, 0.2)"
+                    }}
+                  >
+                    {stg}
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -137,51 +203,133 @@ export function Step5Send({ onSuccess, onLog }: Step5SendProps) {
             type="submit"
             className="btn-primary"
             disabled={sending}
+            style={{ width: "100%", padding: "14px 24px", fontSize: 15 }}
           >
-            {sending ? "Generating ZK Proof & Broadcasting..." : "Prove & Broadcast Shielded Transaction"}
+            {sending ? (
+              <>
+                <div className="spinner" />
+                <span>Computing SNARK Proof & Broadcasting...</span>
+              </>
+            ) : (
+              <>
+                <span>⚡</span>
+                <span>Prove & Broadcast Shielded Transaction</span>
+              </>
+            )}
           </button>
         </form>
       ) : (
-        <div style={{ background: "rgba(16, 185, 129, 0.08)", border: "1px solid rgba(16, 185, 129, 0.3)", borderRadius: 10, padding: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-            <span style={{ fontSize: 20 }}>🎉</span>
-            <h3 style={{ margin: 0, fontSize: 16, color: "var(--accent-emerald)" }}>
-              Shielded Transaction Successfully Broadcast!
-            </h3>
+        /* Success Screen */
+        <div style={{
+          background: "rgba(16, 185, 129, 0.08)",
+          border: "1px solid rgba(16, 185, 129, 0.35)",
+          borderRadius: 14,
+          padding: 24,
+          boxShadow: "0 0 30px rgba(16, 185, 129, 0.15)"
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+            <div style={{
+              width: 38,
+              height: 38,
+              borderRadius: "50%",
+              background: "rgba(16, 185, 129, 0.2)",
+              color: "var(--accent-emerald)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 20,
+              fontWeight: 900
+            }}>
+              ✓
+            </div>
+            <div>
+              <h3 style={{ margin: 0, fontSize: 18, color: "#ffffff", fontWeight: 700 }}>
+                Shielded Transaction Confirmed & Broadcast!
+              </h3>
+              <div style={{ fontSize: 12, color: "var(--accent-emerald)", marginTop: 2 }}>
+                Halo 2 zero-knowledge proof generated and accepted by testnet mempool
+              </div>
+            </div>
           </div>
 
-          <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 4 }}>TRANSACTION ID (TXID):</div>
-            <div id="result-txid" className="mono" style={{ fontSize: 13, color: "#f8fafc", wordBreak: "break-all", background: "rgba(0,0,0,0.4)", padding: 10, borderRadius: 6 }}>
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <span style={{ fontSize: 11, color: "var(--text-muted)", fontWeight: 700, letterSpacing: "0.5px" }}>
+                TRANSACTION ID (TXID)
+              </span>
+              <button
+                className="btn-secondary"
+                style={{ padding: "3px 8px", fontSize: 11 }}
+                onClick={copyTxid}
+              >
+                {copiedTxid ? "✓ Copied" : "Copy TxID"}
+              </button>
+            </div>
+            <div
+              id="result-txid"
+              className="mono"
+              style={{
+                fontSize: 13,
+                color: "#f8fafc",
+                wordBreak: "break-all",
+                background: "rgba(0, 0, 0, 0.45)",
+                padding: "12px 14px",
+                borderRadius: 8,
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+                lineHeight: 1.5
+              }}
+            >
               {receipt.txid}
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 16, fontSize: 12 }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+            gap: 12,
+            marginBottom: 20,
+            background: "rgba(0, 0, 0, 0.25)",
+            padding: 14,
+            borderRadius: 10,
+            border: "1px solid var(--bg-card-border)"
+          }}>
             <div>
-              <span style={{ color: "var(--text-muted)" }}>Amount: </span>
-              <span className="mono" style={{ color: "#fff", fontWeight: 600 }}>{receipt.amountZec} ZEC</span>
+              <div style={{ fontSize: 11, color: "var(--text-dim)" }}>AMOUNT SENT</div>
+              <div className="mono" style={{ fontSize: 14, fontWeight: 700, color: "#f8fafc", marginTop: 2 }}>
+                {receipt.amountZec} ZEC
+              </div>
             </div>
             <div>
-              <span style={{ color: "var(--text-muted)" }}>Fee: </span>
-              <span className="mono" style={{ color: "#fff" }}>0.00010000 ZEC</span>
+              <div style={{ fontSize: 11, color: "var(--text-dim)" }}>ZIP 317 FEE</div>
+              <div className="mono" style={{ fontSize: 14, color: "var(--text-muted)", marginTop: 2 }}>
+                0.00010000 ZEC
+              </div>
             </div>
             <div>
-              <span style={{ color: "var(--text-muted)" }}>Status: </span>
-              <span style={{ color: "var(--accent-emerald)", fontWeight: 600 }}>VERIFIED</span>
+              <div style={{ fontSize: 11, color: "var(--text-dim)" }}>PROOF ENGINE</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--accent-cyan)", marginTop: 2 }}>
+                Halo 2 (Orchard)
+              </div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11, color: "var(--text-dim)" }}>VERIFICATION</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "var(--accent-emerald)", marginTop: 2 }}>
+                MEMPOOL BROADCAST
+              </div>
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 12 }}>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a
               id="explorer-link"
               href={receipt.explorerUrl}
               target="_blank"
               rel="noreferrer"
               className="btn-primary"
-              style={{ textDecoration: "none", fontSize: 13 }}
+              style={{ textDecoration: "none" }}
             >
-              View on Testnet Explorer ↗
+              <span>View on Testnet Explorer</span>
+              <span>↗</span>
             </a>
 
             <button

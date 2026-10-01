@@ -11,28 +11,42 @@ export function Header({ environment, crossOriginIsolated, wasmReady }: HeaderPr
     <header style={{ marginBottom: 28 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <div style={{
-              width: 36,
-              height: 36,
+              width: 44,
+              height: 44,
               borderRadius: "50%",
-              background: "linear-gradient(135deg, #f5a623 0%, #e09112 100%)",
+              background: "linear-gradient(135deg, #f5a623 0%, #d98207 100%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontWeight: "bold",
-              fontSize: 18,
+              fontWeight: 900,
+              fontSize: 22,
               color: "#000",
-              boxShadow: "0 0 16px rgba(245, 166, 35, 0.4)"
+              boxShadow: "0 0 24px rgba(245, 166, 35, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.4)",
+              flexShrink: 0
             }}>
               ⓩ
             </div>
             <div>
-              <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700, letterSpacing: "-0.5px" }}>
-                create-zcash-app
-              </h1>
-              <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>
-                Zero-to-Shielded Browser Onboarding Experience
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, letterSpacing: "-0.6px", color: "#ffffff" }}>
+                  create-zcash-app
+                </h1>
+                <span style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: "var(--accent-gold)",
+                  background: "rgba(245, 166, 35, 0.12)",
+                  padding: "2px 6px",
+                  borderRadius: 4,
+                  border: "1px solid rgba(245, 166, 35, 0.25)"
+                }}>
+                  v0.1.0-alpha
+                </span>
+              </div>
+              <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 3 }}>
+                Instant Zero-to-Shielded Browser Client • ZECATHON 2026
               </div>
             </div>
           </div>
@@ -51,6 +65,17 @@ export function Header({ environment, crossOriginIsolated, wasmReady }: HeaderPr
           <span className={`badge ${wasmReady ? "badge-green" : "badge-blue"}`}>
             {wasmReady ? "WASM: READY" : "WASM: IDLE"}
           </span>
+
+          <a
+            href="https://github.com/Anekenonso/create-zcash-app"
+            target="_blank"
+            rel="noreferrer"
+            className="btn-secondary"
+            style={{ padding: "5px 12px", fontSize: 12, textDecoration: "none" }}
+            title="View Source on GitHub"
+          >
+            GitHub ↗
+          </a>
         </div>
       </div>
     </header>

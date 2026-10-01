@@ -14,7 +14,7 @@ export function Step4Funding({ onFunded, onLog }: Step4FundingProps) {
 
   const handleQuickFaucet = () => {
     setLoading(true);
-    onLog("Simulating instant testnet dispenser receipt (+0.50000000 ZEC)...");
+    onLog("Simulating instant testnet dispenser receipt (+0.50000000 ZEC into Orchard pool)...");
     setTimeout(() => {
       const updated = zcashClient.depositTestFunds(0.5);
       setBalances(updated);
@@ -27,45 +27,100 @@ export function Step4Funding({ onFunded, onLog }: Step4FundingProps) {
   const hasBalance = balances.totalZat > 0n;
 
   return (
-    <div className="glass-card" style={{ padding: 24 }}>
-      <h2 style={{ margin: "0 0 6px", fontSize: 18, color: "var(--accent-gold)" }}>
-        Step 4: Balance & Testnet Funding
-      </h2>
-      <p style={{ margin: "0 0 20px", color: "var(--text-muted)", fontSize: 14 }}>
-        View note commitment balances and fund the account with testnet ZEC to prepare for shielded transactions.
-      </p>
+    <div className="glass-card" style={{ padding: 28 }}>
+      <div style={{ marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent-gold)", letterSpacing: "0.5px" }}>
+            STEP 04
+          </span>
+          <span style={{ color: "var(--text-dim)" }}>•</span>
+          <span style={{ fontSize: 12, color: "var(--text-muted)" }}>BALANCE & LIQUIDITY</span>
+        </div>
+        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#ffffff" }}>
+          Shielded Note Balances & Testnet Funding
+        </h2>
+        <p style={{ margin: "8px 0 0", color: "var(--text-muted)", fontSize: 14, lineHeight: 1.5 }}>
+          Zcash accounts track shielded notes independently across the Orchard and Sapling pools. 
+          Fund your account with testnet ZEC using the instant dispenser or the public testnet faucet.
+        </p>
+      </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 20 }}>
-        <div style={{ background: "rgba(0,0,0,0.3)", padding: 16, borderRadius: 8, border: "1px solid var(--bg-card-border)" }}>
-          <div style={{ fontSize: 11, color: "var(--text-muted)" }}>TOTAL SHIELDED BALANCE</div>
-          <div className="mono" style={{ fontSize: 24, fontWeight: 700, color: hasBalance ? "var(--accent-emerald)" : "#94a3b8", marginTop: 4 }}>
-            {balances.totalZec} <span style={{ fontSize: 14, color: "var(--accent-gold)" }}>ZEC</span>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14, marginBottom: 24 }}>
+        <div style={{
+          background: hasBalance ? "rgba(16, 185, 129, 0.08)" : "rgba(0, 0, 0, 0.35)",
+          padding: 18,
+          borderRadius: 12,
+          border: `1px solid ${hasBalance ? "rgba(16, 185, 129, 0.3)" : "var(--bg-card-border)"}`
+        }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.5px" }}>
+            TOTAL SHIELDED BALANCE
+          </div>
+          <div className="mono" style={{ fontSize: 26, fontWeight: 800, color: hasBalance ? "var(--accent-emerald)" : "#94a3b8", marginTop: 6 }}>
+            {balances.totalZec} <span style={{ fontSize: 15, color: "var(--accent-gold)", fontWeight: 700 }}>ZEC</span>
+          </div>
+          <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 4 }}>
+            {balances.totalZat.toLocaleString()} zatoshi available
           </div>
         </div>
 
-        <div style={{ background: "rgba(0,0,0,0.3)", padding: 16, borderRadius: 8, border: "1px solid var(--bg-card-border)" }}>
-          <div style={{ fontSize: 11, color: "var(--text-muted)" }}>ORCHARD POOL</div>
-          <div className="mono" style={{ fontSize: 16, fontWeight: 600, color: "#e2e8f0", marginTop: 8 }}>
-            {balances.orchardZat.toString()} zat
+        <div style={{
+          background: "rgba(0, 0, 0, 0.35)",
+          padding: 18,
+          borderRadius: 12,
+          border: "1px solid var(--bg-card-border)"
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.5px" }}>
+              ORCHARD POOL (HALO 2)
+            </span>
+            <span style={{ fontSize: 10, color: "var(--accent-gold)", background: "rgba(245, 166, 35, 0.12)", padding: "2px 6px", borderRadius: 4, fontWeight: 700 }}>
+              ACTIVE
+            </span>
+          </div>
+          <div className="mono" style={{ fontSize: 18, fontWeight: 700, color: "#f1f5f9", marginTop: 8 }}>
+            {balances.orchardZat.toLocaleString()} zat
+          </div>
+          <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 4 }}>
+            Zero-knowledge recursive SNARK notes
           </div>
         </div>
 
-        <div style={{ background: "rgba(0,0,0,0.3)", padding: 16, borderRadius: 8, border: "1px solid var(--bg-card-border)" }}>
-          <div style={{ fontSize: 11, color: "var(--text-muted)" }}>STANDARD TX FEE</div>
-          <div className="mono" style={{ fontSize: 16, fontWeight: 600, color: "var(--text-muted)", marginTop: 8 }}>
-            0.00010000 ZEC (ZIP 317)
+        <div style={{
+          background: "rgba(0, 0, 0, 0.35)",
+          padding: 18,
+          borderRadius: 12,
+          border: "1px solid var(--bg-card-border)"
+        }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.5px" }}>
+            STANDARD NETWORK FEE
+          </div>
+          <div className="mono" style={{ fontSize: 18, fontWeight: 700, color: "#94a3b8", marginTop: 8 }}>
+            0.00010000 ZEC
+          </div>
+          <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 4 }}>
+            ZIP 317 proportional fee policy
           </div>
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
         <button
           id="request-faucet-btn"
           className="btn-primary"
           onClick={handleQuickFaucet}
           disabled={loading}
         >
-          {loading ? "Receiving Funds..." : "Quick Dispenser (+0.50 ZEC)"}
+          {loading ? (
+            <>
+              <div className="spinner" />
+              <span>Receiving Testnet Funds...</span>
+            </>
+          ) : (
+            <>
+              <span>💧</span>
+              <span>Instant Dispenser (+0.50 ZEC)</span>
+            </>
+          )}
         </button>
 
         <a
@@ -73,10 +128,17 @@ export function Step4Funding({ onFunded, onLog }: Step4FundingProps) {
           target="_blank"
           rel="noreferrer"
           className="btn-secondary"
-          style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
+          style={{ textDecoration: "none" }}
         >
-          External Testnet Faucet ↗
+          <span>External Public Faucet</span>
+          <span>↗</span>
         </a>
+
+        {hasBalance && (
+          <span style={{ fontSize: 13, color: "var(--accent-emerald)", fontWeight: 600, marginLeft: "auto" }}>
+            ✓ Account funded and ready for shielded send
+          </span>
+        )}
       </div>
     </div>
   );
