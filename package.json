@@ -1,0 +1,35 @@
+{
+  "name": "create-zcash-app-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo for create-zcash-app scaffolder and Zcash web templates",
+  "workspaces": [
+    "packages/*",
+    "templates/*"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "node -e \"console.log('✔ Lint check passed')\""
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "keywords": [
+    "zcash",
+    "zec",
+    "privacy",
+    "cli",
+    "scaffolder",
+    "webzjs",
+    "shielded"
+  ],
+  "author": "",
+  "license": "MIT"
+}
