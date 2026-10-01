@@ -38,3 +38,8 @@ coverage/
 .nyc_output/
 .turbo/
 .cache/
+
+# Internal Workbooks & Planning
+ZECATHON_create-zcash-app_BUILD_PLAN.md
+*_BUILD_PLAN.md
+*_Worksheet.md
