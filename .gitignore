@@ -43,3 +43,14 @@ coverage/
 ZECATHON_create-zcash-app_BUILD_PLAN.md
 *_BUILD_PLAN.md
 *_Worksheet.md
+
+# Demo Video Recordings & Audio Scripts
+*.mp4
+*.webm
+*.mov
+*.wav
+*.mp3
+evidence/*demo*
+evidence/*voiceover*
+evidence/*recording*
+
