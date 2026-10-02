@@ -284,7 +284,6 @@ Detailed audit logs:
 - Phase 1 Browser Spike: [`evidence/kill-test-spike.md`](evidence/kill-test-spike.md)
 - Phase 2 Technical Baseline: [`evidence/technical-baseline.md`](evidence/technical-baseline.md)
 - Phase 3 Vertical Slice Report: [`evidence/vertical-slice-report.md`](evidence/vertical-slice-report.md)
-- Wildcard Track Submission Package: [`evidence/wildcard-submission-package.md`](evidence/wildcard-submission-package.md)
 
 ---
 
