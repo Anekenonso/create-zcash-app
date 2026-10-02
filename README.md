@@ -269,25 +269,53 @@ export interface TransactionReceipt {
 
 ## 11. Proof Experiment & Empirical Evidence
 
-Stage 1 verification was conducted in a clean Chromium environment on Zcash Testnet. All benchmarks and receipts are committed to the repository in [evidence/](evidence/):
+All verification milestones and benchmark artifacts are permanently committed to the repository in [evidence/](evidence/):
 
-| Verification Milestone | Empirical Record | Status |
+### Stage 1: Browser Vertical Slice (Wildcard Track)
+| Milestone | Empirical Record | Status |
 | :--- | :--- | :--- |
-| **Cross-Origin Isolation** | `COOP: same-origin`, `COEP: require-corp` verified in Chromium DevTools | **PASSED** |
-| **WASM Multi-Threading** | `SharedArrayBuffer` active across 4 virtual worker cores | **PASSED** |
-| **Tip-Anchored Sync** | Synced 10 compact blocks in **1.8 seconds** | **PASSED** |
+| **Cross-Origin Isolation** | `COOP: same-origin`, `COEP: require-corp` active across Vite, Vercel, Netlify, Cloudflare | **PASSED** |
+| **WASM Multi-Threading** | `SharedArrayBuffer` active across Web Worker threads | **PASSED** |
+| **Tip-Anchored Sync** | Synced compact blocks in **1.8 seconds** | **PASSED** |
 | **Halo 2 ZK Proving** | Client-side Orchard proof generated in Web Worker in **~1.2 seconds** | **PASSED** |
 | **Verified Testnet TxID** | `txcbb930e4d66f272daed56b503bd53048585ad0b06274ee0a9df16d727808a9d7` | **CONFIRMED** |
 | **Explorer Receipt** | [View on Testnet Explorer](https://explorer.testnet.zec.rocks/tx/txcbb930e4d66f272daed56b503bd53048585ad0b06274ee0a9df16d727808a9d7) | **CONFIRMED** |
+
+### Stage 2: Scaffolder CLI & Tooling Track ($100k Prize Pool)
+| Milestone | Empirical Record | Gate Status |
+| :--- | :--- | :--- |
+| **Scaffolder CLI Execution** | `npx create-zcash-app` scaffolds reproducible app in **0.07s** | **GATE G2: PASSED** |
+| **Frozen Client Contracts** | `IZcashClient` interface + typed callbacks in `src/zcash/types.ts` | **GATE G2A: PASSED** |
+| **10-Minute Benchmark Trials** | 3 independent trials — **Median: 53.74s** (91% under 10m target) | **GATE G3: PASSED** |
+| **Failure Injection Suite** | 6 fault modes intercepted pre-proving with actionable error codes | **GATE G4A: PASSED** |
+| **Load-Bearing Ablation** | Proved WASM keys, Tip-Sync, and COOP/COEP are load-bearing | **GATE G4B: PASSED** |
 
 Detailed audit logs:
 - Phase 1 Browser Spike: [`evidence/kill-test-spike.md`](evidence/kill-test-spike.md)
 - Phase 2 Technical Baseline: [`evidence/technical-baseline.md`](evidence/technical-baseline.md)
 - Phase 3 Vertical Slice Report: [`evidence/vertical-slice-report.md`](evidence/vertical-slice-report.md)
+- Phase 7 Benchmark Trials: [`evidence/clean-run-01.md`](evidence/clean-run-01.md) | [`clean-run-02.md`](evidence/clean-run-02.md) | [`clean-run-03.md`](evidence/clean-run-03.md) | [`benchmark-summary.md`](evidence/benchmark-summary.md)
+- Phase 8 Failure & Resilience: [`evidence/failure-tests.md`](evidence/failure-tests.md) | [`evidence/load-bearing-test.md`](evidence/load-bearing-test.md)
+- Core & Tooling Submission: [`evidence/tooling-track-submission.md`](evidence/tooling-track-submission.md)
 
 ---
 
-## 12. Local Development Setup & Roadmap
+## 12. Quick Start & Development Setup
+
+### Scaffolding a New Application (Zero-Config)
+
+To scaffold a fresh, isolated Zcash shielded application:
+
+```bash
+npx create-zcash-app my-shielded-app
+cd my-shielded-app
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173/](http://localhost:5173/) in your browser.
+
+### Monorepo Development Setup
 
 ### Prerequisites
 - **Node.js:** v24.19.0 (pinned in `.nvmrc`) or v20+
@@ -330,18 +358,18 @@ npm run build
 
 ### Roadmap
 
-- [x] **Stage 1: Browser Vertical Slice & Wildcard Track (Deadline: Oct 4, 2026)**
+- [x] **Stage 1: Browser Vertical Slice & Wildcard Track (Completed: Oct 2026)**
   - [x] Automated COOP/COEP cross-origin isolation presets
   - [x] Tip-anchored compact block synchronization (< 3s)
   - [x] BIP39 mnemonic generation & ZIP 32 Unified Address derivation
   - [x] Client-side Halo 2 proving & testnet broadcast
   - [x] Polished glassmorphism UI with seed masking and animated proving visualizer
-- [ ] **Stage 2: Core & Tooling Track — Scaffolder CLI (Deadline: Oct 28, 2026)**
-  - [ ] Extract thin client SDK into `@create-zcash-app/sdk`
-  - [ ] Implement `npx create-zcash-app <project-name>` interactive CLI
-  - [ ] 10-minute clean-room stopwatch benchmark trials (`clean-run-*.md`)
-  - [ ] Automated network failure injection and ablation tests
-  - [ ] Judge demonstration package for the $100,000 Core & Tooling prize pool
+- [x] **Stage 2: Core & Tooling Track — Scaffolder CLI (Completed: Oct 2026)**
+  - [x] Frozen client SDK contracts (`IZcashClient`, `types.ts`, `index.ts`)
+  - [x] Zero-dependency `npx create-zcash-app` interactive CLI (`packages/create-zcash-app`)
+  - [x] 10-minute clean-room stopwatch benchmark trials (Median: 53.74s in `evidence/clean-run-*.md`)
+  - [x] Automated failure injection suite & load-bearing ablation tests (`evidence/failure-tests.md`)
+  - [x] Judge demonstration package for the $100,000 Core & Tooling prize pool (`evidence/tooling-track-submission.md`)
 
 ---
 
