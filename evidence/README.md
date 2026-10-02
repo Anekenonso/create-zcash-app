@@ -12,7 +12,5 @@ This directory houses verifiable test logs, stopwatch trial data, and blockchain
 - `clean-run-02.md`: Second clean-room timer trial (53.74s to verified shielded transaction) — **PASSED**.
 - `clean-run-03.md`: Third clean-room timer trial (53.39s to verified shielded transaction) — **PASSED**.
 - `benchmark-summary.md`: Statistical summary of 3 clean-room trials (Median: 53.74s < 600s budget) — **GATE G3 PASSED**.
-
-## Remaining Stage 2 Verification Artifacts:
-- `load-bearing-test.md`: Ablation experiment proving Zcash light client is load-bearing.
-- `failure-tests.md`: Diagnostic reports verifying proper error handling during network/faucet drops.
+- `failure-tests.md`: Systematic 6-fault failure injection and diagnostic taxonomy report — **GATE G4A PASSED**.
+- `load-bearing-test.md`: Ablation experiment proving cryptographic WASM, Tip-Sync, and COOP/COEP are load-bearing — **GATE G4B PASSED**.
