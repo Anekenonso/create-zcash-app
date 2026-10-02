@@ -1,8 +1,17 @@
-import { AccountData, WalletBalances, ShieldedSendPayload, TransactionReceipt, Result } from "./types";
+import {
+  AccountData,
+  WalletBalances,
+  ShieldedSendPayload,
+  TransactionReceipt,
+  Result,
+  IZcashClient,
+  SyncProgressCallback,
+  TransferStepCallback
+} from "./types";
 import { ERRORS } from "./errors";
 import { ACTIVE_NETWORK } from "../config/network";
 
-export class ZcashClientController {
+export class ZcashClientController implements IZcashClient {
   private activeAccount: AccountData | null = null;
   private balances: WalletBalances = {
     totalZat: 0n,
@@ -64,7 +73,7 @@ export class ZcashClientController {
    * Executes Tip-Anchored Compact Block Sync (< 3 seconds for new accounts)
    */
   public async sync(
-    onProgress: (current: number, target: number, status: string) => void
+    onProgress: SyncProgressCallback
   ): Promise<Result<WalletBalances>> {
     if (!this.activeAccount) {
       return { ok: false, error: ERRORS.ACCOUNT_CREATION_FAILED("No active account to sync") };
@@ -114,7 +123,7 @@ export class ZcashClientController {
    */
   public async executeShieldedTransfer(
     payload: ShieldedSendPayload,
-    onStep: (step: string) => void
+    onStep: TransferStepCallback
   ): Promise<Result<TransactionReceipt>> {
     if (!this.activeAccount) {
       return { ok: false, error: ERRORS.ACCOUNT_CREATION_FAILED("No spending key available") };
