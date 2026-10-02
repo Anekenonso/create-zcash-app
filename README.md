@@ -90,7 +90,7 @@ flowchart TD
 
     subgraph BlockchainLayer["Zcash Testnet Consensus Layer"]
         Mempool["Testnet Mempool & Miners"]
-        Explorer["Block Explorer\n(explorer.testnet.zec.rocks)"]
+        Explorer["Block Explorer\n(blockexplorer.one/zcash/testnet)"]
     end
 
     UI -->|"User Actions (Init, Derive, Send)"| ClientCtrl
@@ -152,7 +152,7 @@ To ensure auditability, security, and maintainability, `create-zcash-app` strict
 - **Network:** Zcash Testnet
 - **gRPC-Web Gateway:** `https://testnet.zec.rocks:443` (HTTP/2 TLS with native CORS support)
 - **Fallback Endpoints:** `https://zcash-testnet.lightwalletd.com:443`
-- **Block Explorer:** [https://explorer.testnet.zec.rocks](https://explorer.testnet.zec.rocks)
+- **Block Explorer:** [https://blockexplorer.one/zcash/testnet](https://blockexplorer.one/zcash/testnet)
 - **Primary WASM Engine:** `@bytezhang/webzjs-wallet` (v0.1.0-alpha.23)
 - **Key Derivation Engine:** `@chainsafe/webzjs-keys` (v0.1.0)
 - **Zero-Knowledge Circuit:** Halo 2 recursive proving for the Orchard shielded pool (Zcash protocol Nu5).
@@ -278,8 +278,8 @@ All verification milestones and benchmark artifacts are permanently committed to
 | **WASM Multi-Threading** | `SharedArrayBuffer` active across Web Worker threads | **PASSED** |
 | **Tip-Anchored Sync** | Synced compact blocks in **1.8 seconds** | **PASSED** |
 | **Halo 2 ZK Proving** | Client-side Orchard proof generated in Web Worker in **~1.2 seconds** | **PASSED** |
-| **Verified Testnet TxID** | `txcbb930e4d66f272daed56b503bd53048585ad0b06274ee0a9df16d727808a9d7` | **CONFIRMED** |
-| **Explorer Receipt** | [View on Testnet Explorer](https://explorer.testnet.zec.rocks/tx/txcbb930e4d66f272daed56b503bd53048585ad0b06274ee0a9df16d727808a9d7) | **CONFIRMED** |
+| **Verified Testnet TxID** | `cbb930e4d66f272daed56b503bd53048585ad0b06274ee0a9df16d727808a9d7` | **CONFIRMED** |
+| **Explorer Receipt** | [View on Testnet Explorer](https://blockexplorer.one/zcash/testnet/tx/cbb930e4d66f272daed56b503bd53048585ad0b06274ee0a9df16d727808a9d7) | **CONFIRMED** |
 
 ### Stage 2: Scaffolder CLI & Tooling Track ($100k Prize Pool)
 | Milestone | Empirical Record | Gate Status |

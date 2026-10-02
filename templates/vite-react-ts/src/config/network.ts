@@ -19,7 +19,7 @@ export const NETWORKS: Record<NetworkType, NetworkConfig> = {
     network: "testnet",
     lightdUrl: "https://testnet.zec.rocks:443",
     fallbackLightdUrl: "https://zcash-testnet.chainsafe.dev",
-    explorerUrl: "https://explorer.testnet.zec.rocks",
+    explorerUrl: "https://blockexplorer.one/zcash/testnet",
     faucetUrl: "https://faucet.zec.rocks",
     defaultBirthdayBuffer: 10
   },
@@ -27,7 +27,7 @@ export const NETWORKS: Record<NetworkType, NetworkConfig> = {
     network: "mainnet",
     lightdUrl: "https://zec.rocks:443",
     fallbackLightdUrl: "https://zcash-mainnet.chainsafe.dev",
-    explorerUrl: "https://explorer.zec.rocks",
+    explorerUrl: "https://blockexplorer.one/zcash/mainnet",
     faucetUrl: "",
     defaultBirthdayBuffer: 10
   }

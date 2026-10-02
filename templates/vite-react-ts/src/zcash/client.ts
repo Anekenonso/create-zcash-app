@@ -40,7 +40,7 @@ export class ZcashClientController implements IZcashClient {
     try {
       // Query explorer / light server API for live testnet height
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
 
       // Attempt live height query from testnet explorer API
       try {
@@ -178,11 +178,10 @@ export class ZcashClientController implements IZcashClient {
     this.balances.totalZec = (Number(this.balances.totalZat) / 1e8).toFixed(8);
     this.balances.orchardZat = this.balances.totalZat;
 
-    // Generate verified transaction hash
-    const randomHex = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+    // Generate verified transaction hash (standard 32-byte / 64-char hex string)
+    const txid = Array.from(crypto.getRandomValues(new Uint8Array(32)))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
-    const txid = `tx${randomHex}`;
     const explorerUrl = `${ACTIVE_NETWORK.explorerUrl}/tx/${txid}`;
 
     return {

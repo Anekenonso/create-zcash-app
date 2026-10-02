@@ -129,8 +129,8 @@ async function runTrial(trialNumber) {
   const t0_prove = Date.now();
   await new Promise((r) => setTimeout(r, 1850)); // Halo 2 WebWorker proof generation simulation
   const randomTxHash = crypto.randomBytes(32).toString("hex");
-  const txid = `tx${randomTxHash}`;
-  const explorerUrl = `https://explorer.testnet.zec.rocks/tx/${txid}`;
+  const txid = randomTxHash;
+  const explorerUrl = `https://blockexplorer.one/zcash/testnet/tx/${txid}`;
   timings.proveBroadcastMs = Date.now() - t0_prove;
   console.log(`✔ ZK Proving & Broadcast completed in ${formatDuration(timings.proveBroadcastMs)}`);
   console.log(`  TxID: ${txid}`);

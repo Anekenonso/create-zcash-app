@@ -45,7 +45,7 @@ Mitigation: Mandatory COOP/COEP headers enforced across Vite dev server and depl
 |---|---|---|---|
 | **Primary Testnet Light Server** | `https://testnet.zec.rocks:443` | Active / Verified | gRPC / TLS |
 | **Secondary Testnet Proxy** | `https://zcash-testnet.chainsafe.dev` | Active (Redirects to testnet.zec.rocks) | gRPC-Web |
-| **Testnet Block Explorer** | `https://explorer.testnet.zec.rocks` | Active | Web UI |
+| **Testnet Block Explorer** | `https://blockexplorer.one/zcash/testnet` | Active | Web UI |
 | **Testnet Faucet** | `https://faucet.zec.rocks` | Community Active | Web / Faucet API |
 
 ---
