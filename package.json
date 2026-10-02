@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "lint": "node -e \"console.log('✔ Lint check passed')\""
+    "lint": "node -e \"console.log('✔ Lint check passed')\"",
+    "create-app": "node ./packages/create-zcash-app/dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
