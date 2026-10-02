@@ -153,6 +153,7 @@ To ensure auditability, security, and maintainability, `create-zcash-app` strict
 - **gRPC-Web Gateway:** `https://testnet.zec.rocks:443` (HTTP/2 TLS with native CORS support)
 - **Fallback Endpoints:** `https://zcash-testnet.lightwalletd.com:443`
 - **Block Explorer:** [https://blockexplorer.one/zcash/testnet](https://blockexplorer.one/zcash/testnet)
+- **Testnet Faucet:** [https://fauzec.com](https://fauzec.com) (Official Zcash Foundation Testnet Faucet)
 - **Primary WASM Engine:** `@bytezhang/webzjs-wallet` (v0.1.0-alpha.23)
 - **Key Derivation Engine:** `@chainsafe/webzjs-keys` (v0.1.0)
 - **Zero-Knowledge Circuit:** Halo 2 recursive proving for the Orchard shielded pool (Zcash protocol Nu5).
